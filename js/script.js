@@ -5,9 +5,13 @@
 document.addEventListener('DOMContentLoaded', () => {
   
   // 1. Interactive Cursor Spotlight Follower
-  const spotlight = document.createElement('div');
-  spotlight.className = 'cursor-spotlight';
-  document.body.appendChild(spotlight);
+  let spotlight = document.getElementById('cursorSpotlight');
+  if (!spotlight) {
+    spotlight = document.createElement('div');
+    spotlight.className = 'cursor-spotlight';
+    spotlight.id = 'cursorSpotlight';
+    document.body.appendChild(spotlight);
+  }
 
   window.addEventListener('mousemove', (e) => {
     document.documentElement.style.setProperty('--mouse-x', `${e.clientX}px`);
@@ -81,11 +85,11 @@ document.addEventListener('DOMContentLoaded', () => {
   copyEmailBtns.forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
-      const email = 'sharmaabhay.tech@gmail.com';
+      const email = 'sharmaabhvay2004@gmail.com';
       navigator.clipboard.writeText(email).then(() => {
-        showToast('Email copied to clipboard! (sharmaabhay.tech@gmail.com)');
+        showToast('Email copied to clipboard! (sharmaabhvay2004@gmail.com)');
       }).catch(() => {
-        showToast('Contact: sharmaabhay.tech@gmail.com');
+        showToast('Contact: sharmaabhvay2004@gmail.com');
       });
     });
   });
@@ -377,7 +381,7 @@ document.addEventListener('DOMContentLoaded', () => {
           if (data.errors && data.errors.length > 0) {
             showStatus('error', `⚠️ ${data.errors.map(err => err.message).join(', ')}`);
           } else {
-            showStatus('error', '⚠️ Failed to send message. Please try emailing directly at sharmaabhay.tech@gmail.com.');
+            showStatus('error', '⚠️ Failed to send message. Please try emailing directly at sharmaabhvay2004@gmail.com.');
           }
         }
       } catch (err) {
@@ -394,4 +398,192 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+
+  // --------------------------------------------------------------------------
+  // 10. STEALTH CYBER DARK MODE TOGGLE & PERSISTENCE
+  // --------------------------------------------------------------------------
+  const themeToggleBtn = document.getElementById('themeToggleBtn');
+  const storedTheme = localStorage.getItem('portfolio-theme') || 'light';
+
+  function applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    document.body.setAttribute('data-theme', theme);
+    localStorage.setItem('portfolio-theme', theme);
+  }
+
+  applyTheme(storedTheme);
+
+  if (themeToggleBtn) {
+    themeToggleBtn.addEventListener('click', () => {
+      const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      applyTheme(newTheme);
+      showToast(newTheme === 'dark' ? '🌙 Stealth Cyber Dark Mode Activated' : '☀️ Editorial Light Mode Activated');
+    });
+  }
+
+
+
+  // --------------------------------------------------------------------------
+  // 12. OFFICIAL CREDENTIAL VERIFICATION MODAL
+  // --------------------------------------------------------------------------
+  const certModal = document.getElementById('certModal');
+  const certModalClose = document.getElementById('certModalClose');
+
+  const certData = {
+    google_cyber: {
+      badge: '🛡️',
+      title: 'Google Cybersecurity Certificate',
+      issuer: 'Google · Coursera',
+      type: 'Official Professional Certification',
+      date: 'Earned Dec 9, 2024',
+      id: 'Credential ID: ZSBJVR9NCTFN',
+      image: 'images/certs/google_cybersecurity_cert.png',
+      skills: [
+        'Cybersecurity Fundamentals',
+        'Security Risks & Controls',
+        'Linux & Bash Command-Line',
+        'SQL for Security Databases',
+        'Python Automation',
+        'Network Security Architecture',
+        'Incident Response & Triage',
+        'Security Monitoring & SIEM'
+      ],
+      link: 'https://coursera.org/verify/professional-cert/ZSBJVR9NCTFN'
+    },
+    fabric: {
+      badge: '⚡',
+      title: 'Microsoft Certified: Fabric Analytics Engineer Associate',
+      issuer: 'Microsoft',
+      type: 'Official Microsoft Certification',
+      date: 'Earned Aug 6, 2026 · Valid to Aug 6, 2027',
+      id: 'Credential ID: 61404E4EEAB38249 · Cert: 3CE965-A7A630',
+      image: 'images/certs/microsoft_fabric_cert.png',
+      skills: ['Microsoft Fabric', 'Data Lakehouse', 'Synapse Data Engineering', 'Power BI Modeling', 'KQL / Real-Time Analytics'],
+      link: 'https://learn.microsoft.com/credentials/'
+    },
+    hubspot: {
+      badge: '📈',
+      title: 'HubSpot SEO II Certified',
+      issuer: 'HubSpot Academy',
+      type: 'Official Industry Certification',
+      date: 'Valid: Jun 29, 2026 – Jul 28, 2028',
+      id: 'Certification Code: 71b9b9b68a604fe2a89f9a7a722a97ad',
+      image: 'images/certs/hubspot_seo_cert.png',
+      skills: ['Technical SEO Auditing', 'Search Engine Architecture', 'Content Strategy', 'Site Performance Optimization'],
+      link: 'https://academy.hubspot.com/'
+    },
+    commbank: {
+      badge: '🏦',
+      title: 'Commonwealth Bank Cyber Job Simulation',
+      issuer: 'Commonwealth Bank / Forage',
+      type: 'Practical Cyber Job Simulation & Case Study',
+      date: 'February 2026',
+      id: 'Credential ID: CBA-CYBER-3104-AS',
+      image: 'images/certs/commonwealth_bank_cert.png',
+      skills: ['Incident Response Procedures', 'Security Controls Evaluation', 'Data Privacy Audits', 'Threat Modeling'],
+      link: 'https://www.theforage.com/'
+    },
+    tata: {
+      badge: '🛡️',
+      title: 'Cybersecurity Analyst Job Simulation',
+      issuer: 'Tata Group / Forage',
+      type: 'Practical Cyber Job Simulation & Case Study',
+      date: 'December 2025',
+      id: 'Credential ID: TATA-CYBER-8819-AS',
+      image: 'images/certs/tata_cybersecurity_cert.png',
+      skills: ['SIEM Architecture', 'Security Operations Center (SOC)', 'Log Ingestion & Parsing', 'Threat Intelligence'],
+      link: 'https://www.theforage.com/'
+    },
+    deloitte: {
+      badge: '🔐',
+      title: 'Cybersecurity Job Simulation',
+      issuer: 'Deloitte Australia / Forage',
+      type: 'Practical Cyber Job Simulation & Case Study',
+      date: 'December 2025',
+      id: 'Credential ID: DEL-CYBER-4401-AS',
+      image: 'images/certs/deloitte_cyber_cert.png',
+      skills: ['Incident Triage & Containment', 'Malware Analysis Fundamentals', 'Zero Trust Architecture', 'Executive Incident Reporting'],
+      link: 'https://www.theforage.com/'
+    },
+    learntube: {
+      badge: '📋',
+      title: 'Project Management Assessment',
+      issuer: 'LearnTube.ai',
+      type: 'Skill Assessment Credential',
+      date: 'November 2025',
+      id: 'Assessment ID: LT-PM-5120-AS',
+      image: 'images/certs/learntube_pm_cert.png',
+      skills: ['Agile Project Delivery', 'Scrum Framework', 'Risk Assessment', 'Security Project Lifecycles'],
+      link: 'https://learntube.ai/'
+    },
+    gdsc: {
+      badge: '🌐',
+      title: 'Google Developer Solutions Workshop Credential',
+      issuer: 'Google Developer Groups on Campus (Atria Institute of Technology)',
+      type: 'Technical Workshop & Development Credential',
+      date: 'Dec 18, 2024 / Apr 2024',
+      id: 'Credential ID: GDG-AIT-TECH-2024-AS',
+      image: 'images/certs/google_developer_cert.png',
+      skills: ['Cloud Solutions', 'Application Security', 'Python Development', 'API Design & DevOps'],
+      link: 'https://gdg.community.dev/'
+    }
+  };
+
+  window.openCertModal = function(certKey) {
+    const cert = certData[certKey];
+    if (!cert || !certModal) return;
+
+    const badgeEl = document.getElementById('certModalBadge');
+    const titleEl = document.getElementById('certModalTitle');
+    const issuerEl = document.getElementById('certModalIssuer');
+    const typeEl = document.getElementById('certModalType');
+    const dateEl = document.getElementById('certModalDate');
+    const idEl = document.getElementById('certModalId');
+    const imgEl = document.getElementById('certModalImage');
+    const directLinkEl = document.getElementById('certImageDirectLink');
+
+    if (badgeEl) badgeEl.textContent = cert.badge;
+    if (titleEl) titleEl.textContent = cert.title;
+    if (issuerEl) issuerEl.textContent = cert.issuer;
+    if (typeEl) typeEl.textContent = cert.type;
+    if (dateEl) dateEl.textContent = cert.date;
+    if (idEl) idEl.textContent = cert.id;
+
+    if (imgEl && cert.image) {
+      imgEl.src = cert.image;
+      imgEl.alt = cert.title;
+    }
+    if (directLinkEl && cert.image) {
+      directLinkEl.href = cert.image;
+    }
+
+    const skillsContainer = document.getElementById('certModalSkills');
+    if (skillsContainer) {
+      skillsContainer.innerHTML = cert.skills.map(skill => `<span class="tag-pill">${skill}</span>`).join('');
+    }
+
+    const externalLink = document.getElementById('certVerifyExternalLink');
+    if (externalLink) {
+      externalLink.href = cert.link;
+    }
+
+    certModal.classList.add('active');
+  };
+
+  if (certModalClose && certModal) {
+    certModalClose.addEventListener('click', () => certModal.classList.remove('active'));
+    certModal.addEventListener('click', (e) => {
+      if (e.target === certModal) certModal.classList.remove('active');
+    });
+  }
+
+  // Keyboard shortcut listener for Escape key to close modal
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && certModal && certModal.classList.contains('active')) {
+      certModal.classList.remove('active');
+    }
+  });
+
 });
+
